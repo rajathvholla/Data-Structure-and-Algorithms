@@ -14,7 +14,7 @@ using std::pair;
 using std::string;
 using std::vector;
 
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 #define pout cout
 #else
@@ -31,7 +31,12 @@ typedef struct point
 //distance between two points
 double dist(Point p1, Point p2)
 {
-  return abs(sqrt(pow((double)p1.x - p2.x, 2) + pow((double)p1.y - p2.y, 2)));
+  double x = (double)p1.x - p2.x;
+  double y = (double)p1.y - p2.y;
+  x *= x;
+  y *= y;
+  double sq = sqrt(x + y);
+  return sq;
 }
 
 auto xCompare = [](Point p1, Point p2) {
@@ -103,11 +108,11 @@ double minimal_distance(vector<Point> points, int left, int right)
 
   pout << endl;
   double dFiltered = d;
-
+  signed int s = filteredPoints.size();
   pout << "Dist between each filtered point\n";
-  for (int i = 0; i < filteredPoints.size() - 1; i++)
+  for (int i = 0; i < s - 1; i++)
   {
-    for (int j = i + 1; j < filteredPoints.size(); j++)
+    for (size_t j = i + 1; j < s; j++)
     {
       double temp = dist(filteredPoints[i], filteredPoints[j]);
       pout << filteredPoints[i].x << "," << filteredPoints[i].y << " " << filteredPoints[j].x << "," << filteredPoints[j].y << " dist:" << temp << endl;
@@ -130,6 +135,6 @@ int main()
     std::cin >> points[i].x >> points[i].y;
   }
   std::sort(points.begin(), points.end(), xCompare);
-  std::pout << std::fixed;
-  std::pout << std::setprecision(9) << minimal_distance(points, 0, points.size()) << "\n";
+  std::cout << std::fixed;
+  std::cout << std::setprecision(9) << minimal_distance(points, 0, points.size()) << "\n";
 }

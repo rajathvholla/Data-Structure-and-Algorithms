@@ -32,28 +32,11 @@ int bin_search(vector<int> &a, int key)
 vector<int> fast_count_segments(vector<int> starts, vector<int> ends, vector<int> points)
 {
   vector<int> cnt(points.size());
-  //write your code here
-
-  //cout << endl;
-  /*for (auto i : starts)
-  {
-    cout << i << " ";
-  }
-  cout << endl;
-  cout << endl;
-  for (auto i : ends)
-  {
-    cout << i << " ";
-  }
-  cout << endl;
-  cout << endl;
-  */
   int i = 0;
   for (auto point : points)
   {
     int starts_before_point = 0;
     int temp = bin_search(starts, point);
-    //cout << "point " << point << " index " << temp << endl;
     // if point is outside of begin
     if (temp == 0 && point < starts[temp])
     {
@@ -69,7 +52,6 @@ vector<int> fast_count_segments(vector<int> starts, vector<int> ends, vector<int
     int ends_before_point = 0;
     int temp2 = bin_search(ends, point);
 
-    //cout << "point " << point << " index " << temp2 << endl;
     // if point is outside of begin
     if (temp2 == 0 && point <= ends[temp2])
     {
@@ -81,7 +63,6 @@ vector<int> fast_count_segments(vector<int> starts, vector<int> ends, vector<int
     }
     //if point is outside of begin
     // if point is inside
-    //cout << starts_before_point << " " << ends_before_point << endl;
     cnt[i++] = starts_before_point - ends_before_point;
   }
 
