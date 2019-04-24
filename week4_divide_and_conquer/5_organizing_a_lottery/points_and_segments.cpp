@@ -31,7 +31,7 @@ int bin_search(vector<int> &a, int key)
 }
 vector<int> fast_count_segments(vector<int> starts, vector<int> ends, vector<int> points)
 {
-  vector<int> cnt(points.size());
+  vector<int> cnt(points.size(), 0);
   int i = 0;
   for (auto point : points)
   {
@@ -43,7 +43,7 @@ vector<int> fast_count_segments(vector<int> starts, vector<int> ends, vector<int
     }
     else
     {
-      if (point == starts[temp])
+      if (temp < starts.size() && point == starts[temp])
         starts_before_point += temp + 1;
       else
         starts_before_point += temp;

@@ -14,14 +14,6 @@ using std::pair;
 using std::string;
 using std::vector;
 
-//#define DEBUG
-#ifdef DEBUG
-#define pout cout
-#else
-#define pout 0 && cout
-#endif
-int debug = 1;
-
 typedef struct point
 {
   int x;
@@ -62,66 +54,66 @@ double bfDist(vector<Point> points, int left, int right)
   }
   return min;
 }
-double minimal_distance(vector<Point> points, int left, int right)
+double minimal_distance(vector<Point> &points, int left, int right)
 {
-  pout << endl;
+  //pout << endl;
   int mid = (right + left) / 2;
-  pout << "Left:" << left << " right:" << right << " mid:" << mid << endl;
-  for (auto i = left; i < right; i++)
+  //pout << "Left:" << left << " right:" << right << " mid:" << mid << endl;
+  //for (auto i = left; i < right; i++)
   {
-    pout << points[i].x << "," << points[i].y << " ";
+    //pout << points[i].x << "," << points[i].y << " ";
   }
-  pout << endl;
+  //pout << endl;
 
   if (right - left <= 3)
   {
     double temp = bfDist(points, left, right);
-    pout << "(right - left <= 3):" << ((right - left)) << " min Dist:" << temp << endl;
+    //pout << "(right - left <= 3):" << ((right - left)) << " min Dist:" << temp << endl;
     return temp;
   }
   double d1 = minimal_distance(points, left, mid);
   double d2 = minimal_distance(points, mid, right);
   double d = std::min(d1, d2);
 
-  pout << "d1:" << d1 << " d2:" << d2 << " d(min(d1,d2):" << d << endl;
+  //pout << "d1:" << d1 << " d2:" << d2 << " d(min(d1,d2):" << d << endl;
 
   vector<Point> filteredPoints;
   // filter points which are less than d from mid
-  pout << "Filtered y array ";
+  //pout << "Filtered y array ";
   for (auto i = left; i < right; i++)
   {
     if (abs(points[i].x - points[mid - 1].x) < d)
     {
       filteredPoints.push_back(points[i]);
-      pout << points[i].x << "," << points[i].y << " ";
+      //pout << points[i].x << "," << points[i].y << " ";
     }
   }
-  pout << endl;
+  //pout << endl;
 
   std::sort(filteredPoints.begin(), filteredPoints.end(), yCompare);
 
-  pout << "After y sort" << endl;
-  for (auto i = 0; i < filteredPoints.size(); i++)
+  //pout << "After y sort" << endl;
+  //for (auto i = 0; i < filteredPoints.size(); i++)
   {
-    pout << filteredPoints[i].x << "," << filteredPoints[i].y << " ";
+    //pout << filteredPoints[i].x << "," << filteredPoints[i].y << " ";
   }
 
-  pout << endl;
+  //pout << endl;
   double dFiltered = d;
   signed int s = filteredPoints.size();
-  pout << "Dist between each filtered point\n";
+  //pout << "Dist between each filtered point\n";
   for (int i = 0; i < s - 1; i++)
   {
-    for (size_t j = i + 1; j < s; j++)
+    for (size_t j = i + 1; j < s && j < 8; j++)
     {
       double temp = dist(filteredPoints[i], filteredPoints[j]);
-      pout << filteredPoints[i].x << "," << filteredPoints[i].y << " " << filteredPoints[j].x << "," << filteredPoints[j].y << " dist:" << temp << endl;
+      //pout << filteredPoints[i].x << "," << filteredPoints[i].y << " " << filteredPoints[j].x << "," << filteredPoints[j].y << " dist:" << temp << endl;
       if (temp < dFiltered)
         dFiltered = temp;
     }
   }
 
-  pout << "d:" << d << " dFiltered:" << dFiltered << " min:" << std::min(d, dFiltered);
+  //pout << "d:" << d << " dFiltered:" << dFiltered << " min:" << std::min(d, dFiltered);
   return std::min(d, dFiltered);
 }
 
